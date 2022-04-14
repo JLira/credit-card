@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
+//TODO Verificar a solicitação no ato do login
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()

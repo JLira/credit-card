@@ -3,11 +3,12 @@ import { Solicitation } from './solicitation.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { CreditCardController } from './credit-card.controller';
+import { CreditCardService } from './credit-card.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User,Solicitation])],
+  imports: [TypeOrmModule.forFeature([User, Solicitation])],
   exports: [TypeOrmModule],
-
   controllers: [CreditCardController],
+  providers: [CreditCardService],
 })
-export class CreditCardModule {}
+export class CreditCardModule { }
