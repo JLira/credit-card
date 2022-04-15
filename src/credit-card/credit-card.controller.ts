@@ -8,8 +8,6 @@ import CreditCardRequestDTO from './types/credit-card-request.dto';
 @Controller('credit-card')
 export class CreditCardController {
   constructor(private CreditCardService: CreditCardService) { }
-
-
   @Post('request')
   async request(@Body() creditCardRequest: CreditCardRequestDTO) {
     console.log(creditCardRequest);

@@ -1,5 +1,5 @@
+import { UserService } from './../user/user.service';
 import { Solicitation } from './solicitation.entity';
-import { User } from './../user/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import CreditCardRequestDTO from './types/credit-card-request.dto';
@@ -9,26 +9,17 @@ import SolicitationStatus from './enum/solicitation-status.enum';
 @Injectable()
 export class CreditCardService {
   constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Solicitation)
     private solicitationRepository: Repository<Solicitation>,
-  ) { }
+    private userService: UserService,
+  ) {}
   async createSolicitation(creditCardRequest: CreditCardRequestDTO) {
-    /**
-     * Criar Usuario - ok
-     * criar solicitacao com usuario atrelado - ok
-     * verificar aprovação de usuario - ok
-     * ativar usuario caso seja aprovado
-     */
-    const user = await this.userRepository.save(
-      this.userRepository.create({
-        name: creditCardRequest.name,
-        cpf: creditCardRequest.cpf,
-        email: creditCardRequest.email,
-        password: creditCardRequest.password,
-      }),
-    );
-
+    const user = await this.userService.createUser({
+      email: creditCardRequest.email,
+      name: creditCardRequest.name,
+      password: creditCardRequest.password,
+      cpf: creditCardRequest.cpf,
+    });
     const approved = this.isApproved();
 
     await this.solicitationRepository.save(
@@ -43,7 +34,7 @@ export class CreditCardService {
     return approved;
   }
 
-  private isApproved(){
+  private isApproved() {
     const score = this.requestScore();
     return score >= 600;
   }

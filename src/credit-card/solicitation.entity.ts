@@ -1,5 +1,11 @@
 import { User } from './../user/user.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { 
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import SolicitationStatus from './enum/solicitation-status.enum';
 
 @Entity()
