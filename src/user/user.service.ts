@@ -20,6 +20,21 @@ export class UserService {
     return this.userRepository.save(userEntity);
   }
 
+  async verifyIfUserExists(email, cpf) {
+    const foundUserByEmail = await this.findUserByEmail(email);
+    const foundUserByCpf = await this.findUserByCpf(cpf);
+
+    return foundUserByEmail.length > 0 || foundUserByCpf.length > 0;
+  }
+
+  private findUserByEmail(email: string) {
+    return this.userRepository.find({ email });
+  }
+
+  private findUserByCpf(cpf: string) {
+    return this.userRepository.find({ cpf });
+  }
+
   private encryptPassword(password: string) {
     return bcrypt.hash(password, 10);
   }

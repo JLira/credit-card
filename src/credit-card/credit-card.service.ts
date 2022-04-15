@@ -1,7 +1,7 @@
 import { UserService } from './../user/user.service';
 import { Solicitation } from './solicitation.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import CreditCardRequestDTO from './types/credit-card-request.dto';
 import { Repository } from 'typeorm';
 import SolicitationStatus from './enum/solicitation-status.enum';
@@ -12,8 +12,17 @@ export class CreditCardService {
     @InjectRepository(Solicitation)
     private solicitationRepository: Repository<Solicitation>,
     private userService: UserService,
-  ) {}
+  ) { }
   async createSolicitation(creditCardRequest: CreditCardRequestDTO) {
+    const userExists = await this.userService.verifyIfUserExists(
+      creditCardRequest.email,
+      creditCardRequest.cpf,
+    );
+
+    if (userExists) {
+      throw new BadRequestException('Usuário já existe na base de dados!');
+    }
+
     const user = await this.userService.createUser({
       email: creditCardRequest.email,
       name: creditCardRequest.name,
