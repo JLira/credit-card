@@ -1,8 +1,10 @@
+import { IsPublic } from './is-public.decorator';
 import { AuthService } from './auth.service';
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import LoginDataDTO from './types/login-data.dto';
 
+@IsPublic()
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
