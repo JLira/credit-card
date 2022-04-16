@@ -7,6 +7,7 @@ import { UserController } from './user/user.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreditCardModule } from './credit-card/credit-card.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { UserModule } from './user/user.module';
     }),
     CreditCardModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController, UserController],
   providers: [AppService],

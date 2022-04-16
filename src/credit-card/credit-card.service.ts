@@ -13,6 +13,7 @@ export class CreditCardService {
     private solicitationRepository: Repository<Solicitation>,
     private userService: UserService,
   ) { }
+
   async createSolicitation(creditCardRequest: CreditCardRequestDTO) {
     const userExists = await this.userService.verifyIfUserExists(
       creditCardRequest.email,
